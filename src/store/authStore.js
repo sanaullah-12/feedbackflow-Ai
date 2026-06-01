@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import api from '../services/api';
+import api, { API_URL } from '../services/api';
 
 const useAuthStore = create((set, get) => ({
   user: null,
@@ -43,7 +43,7 @@ const useAuthStore = create((set, get) => ({
   login: async (email, password) => {
     try {
       set({ loading: true, error: null });
-      const { data } = await api.post('/auth/login', { email, password });
+      const { data } = await api.post(`${API_URL}/auth/login`, { email, password });
       
       // Store token before setting state to ensure it's available for requests
       localStorage.setItem('ff_token', data.token);
@@ -69,7 +69,7 @@ const useAuthStore = create((set, get) => ({
   signup: async (name, email, password) => {
     try {
       set({ loading: true, error: null });
-      const { data } = await api.post('/auth/signup', { name, email, password });
+      const { data } = await api.post(`${API_URL}/auth/signup`, { name, email, password });
       
       // Store token before setting state
       localStorage.setItem('ff_token', data.token);
